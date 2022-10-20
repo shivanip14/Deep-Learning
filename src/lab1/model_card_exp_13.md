@@ -11,7 +11,7 @@ v1
 ### Model type
 The architecture has 3 sequential blocks of conv-conv-batchnorm-maxpool, followed by 2 dense layers, and a 60% dropout layer in between. In the end it uses Adam optimiser and categorical cross-entropy for measuring loss.
 
-The model is fairly simple, as in there are no skip connections or residual blocks.
+The model is fairly simple, as in there are no skip connections or residual blocks. There are 291,645 total parameters, out of which 291,197 are trainable. It took roughly ~56m to train on a Tesla v100.
 
 ### License
 The code is licensed under BSD 3-Clause License that requires adding the developer's permission before mentioning their name for any work built on top of the software. More restrictive than MIT, less so than GPL.
@@ -56,7 +56,7 @@ The MAMe dataset is a novel image classification task focused on museum art medi
 Images of thousands of artworks and artifacts from all the 3 museums (Metropolitan Museum of Art of New York, Los Angeles County Museum of Art, and Cleveland Museum of Art) is aggregated by art experts into 29 classes of mediums (i.e., materials and techniques).
 While the original, high res variable sized images are not used in this model since it needs additional advanced experimentation to reach the required baseline performance of 80% test accuracy, the 256 version was the one on which the data was trained, validated and tested.
 
-Subsets to train, validate and test have been provided in the metadata `MAMe_dataset.csv`, and have a fair disribution across all the categories:
+Subsets for train (20,300 instances), validate (1,450 instances) and test (15,657 instances) have been provided in the metadata `MAMe_dataset.csv`, and have a fair disribution across all the categories:
 
 ![data_distribution](./lab1data/dataex/data_dist.png)
 
