@@ -9,7 +9,7 @@ October 2022
 v1
 
 ### Model type
-The architecture has 3 sequential blocks of conv-conv-batchnorm-maxpool, followed by 2 dense layers, and a 60% dropout layer in between. In the end it uses Adam optimiser and categorical cross-entropy for measuring loss.
+The architecture has 3 sequential blocks of conv-conv-batchnorm-maxpool, followed by 2 dense layers, and a 60% dropout layer in between. In the end it uses Adam optimiser with LR=0.001 and categorical cross-entropy for measuring loss.
 
 The model is fairly simple, as in there are no skip connections or residual blocks. There are 291,645 total parameters, out of which 291,197 are trainable. It took roughly ~56m to train on a Tesla v100.
 ![arch](patnet_architecture.png)
