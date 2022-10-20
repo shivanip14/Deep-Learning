@@ -1,47 +1,47 @@
-#Model Card: patnet
-##Model details
+# Model Card: patnet
+## Model details
 _patnet_ is a CNN image classification model developed by Shivani Patel, pretrained on a large dataset of museum objects, the MAMe dataset which contains thousands of images spanning 29 categories of materials.
 
-###Model date
+### Model date
 October 2022
 
-###Model version
+### Model version
 v1
 
-###Model type
+### Model type
 The architecture has 3 sequential blocks of conv-conv-batchnorm-maxpool, followed by 2 dense layers, and a 60% dropout layer in between. In the end it uses Adam optimiser and categorical cross-entropy for measuring loss.
 
 The model is fairly simple, as in there are no skip connections or residual blocks.
 
-###License
+### License
 The code is licensed under BSD 3-Clause License that requires adding the developer's permission before mentioning their name for any work built on top of the software. More restrictive than MIT, less so than GPL.
 
-###Further info
+### Further info
 Any further questions or comments about the model should be emailed to `shivani.patel@estudiantat.upc.edu` 
 
-##Intended use
-###Primary intended uses
+## Intended use
+### Primary intended uses
 The model is intended for use only within the academic realm. It is built for the partial fulfillment of the course of Deep Learning in the Masters degree of Artificial Intelligence at UPC, Barcelona. However, since the MAMe classification task is an open and unsolved challenge as of the time of completion of this model, with the appropriate credit/permission, it can also be published (as is or as a base model along with necessary improvements) with a paper towards a broader use.
 
-###Primary intended users
+### Primary intended users
 Academicians, students and researchers in the field of deep learning, AI or likewise, as well as hobbyists who would like to explore the domain of CNNs to solve the MAMe task.
 
-###Out-of-scope use-cases
+### Out-of-scope use-cases
 Any deployed use case of the model - whether commercial or not - is currently out of scope. Non-deployed uses even in a constrained environment, for any dataset other than what the model has been tested on (MAMe 256) is not advisable as thorough safety and compatibility testing have not been performed yet.
 
-##Factors
+## Factors
 - The classification of training, validation and test data across 29 mediums (i.e. materials and techniques) have been supervised by art experts.
 - Further collaboration details can be found on the [website](https://hpai.bsc.es/MAMe-dataset/) and [Kaggle page](https://www.kaggle.com/datasets/ferranpares/mame-dataset).
 
 
-##Metrics
+## Metrics
 The metrics used to evaluate the models built as part of the lab task are: accuracy & loss (model-wide), precision, recall & F1 score (across each category, per model).
 
 - Good models are selected first on highest validation accuracy, and are chosen for further builds iteratively.
 - Accuracy graphs, loss graphs and confusion matrices are also generated and saved at `./lab1data/savedmodels/accuracy/`, `./lab1data/savedmodels/loss/` and `./lab1data/savedmodels/conf/` respectively.
 - After a model is built & trained, it is evaluated using the `calculate_scores.py` which loads the model from a previously-saved JSON & weights, calculates the latter of the metrics specified above & generates a report for the model/experiment specified. (submitting a slurm job by passing experiment number as argument: e.g. `sbatch calculate_scores_launcher.sh exp_14`)
 
-##Data
+## Data
 The MAMe dataset is a novel image classification task focused on museum art mediums. Originally introduced in [this](https://arxiv.org/abs/2007.13693) 2020 paper as an image classification dataset with remarkable high resolution and variable shape properties, it's goal is to provide a tool for studying the impact of such properties in image classification.
 Images of thousands of artworks and artifacts from all the 3 museums (Metropolitan Museum of Art of New York, Los Angeles County Museum of Art, and Cleveland Museum of Art) is aggregated by art experts into 29 classes of mediums (i.e., materials and techniques).
 While the original, high res variable sized images are not used in this model since it needs additional advanced experimentation to reach the required baseline performance of 80% test accuracy, the 256 version was the one on which the data was trained, validated and tested.
@@ -50,7 +50,7 @@ Subsets to train, validate and test have been provided in the metadata `MAMe_dat
 
 ![data_distribution](./lab1data/dataex/data_dist.png)
 
-##Quantitative analysis
+## Quantitative analysis
 The model performance is as summarised below:
 
 `Test accuracy = 0.7562751770019531`
@@ -96,11 +96,11 @@ As is evident, the scores across some of the categories is a little subpar as co
 
 On the other hand, there are some which are performing exceptionally well, namely Oil on canvas, Marble & Ivory. 
 
-##Ethical considerations
+## Ethical considerations
 - The model is trained on data that is publicly available, on commercial websites and/or as pre-packaged datasets used widely by the AI community. Most (if not all) art objects photographed are on public display at various museums across the US.
 - The data is about museum art and artifcats and does not contain any sensitive or PII (personally identifyable information).
 
-##Caveats and recommendations
+## Caveats and recommendations
 - The impact of data augmentation have not been able to be fully explored, mainly due to very long training times, especially as the original dataset is big enough. Nevertheless, this should be one sub-domain to look into while trying to better the model.
 - Further design changes and tweaks are required for the subsequent versions of the model to reach the threshold of 80% test accuracy, after which work on the variable-sized images can be started. There is an evident scarcity of solutions to make use of the variable shaped-input in a single model and still provide real-life deployment-level performance, and much of the experimentation lies there.
 
