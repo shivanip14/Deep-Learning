@@ -12,6 +12,7 @@ v1
 The architecture has 3 sequential blocks of conv-conv-batchnorm-maxpool, followed by 2 dense layers, and a 60% dropout layer in between. In the end it uses Adam optimiser and categorical cross-entropy for measuring loss.
 
 The model is fairly simple, as in there are no skip connections or residual blocks. There are 291,645 total parameters, out of which 291,197 are trainable. It took roughly ~56m to train on a Tesla v100.
+![arch](patnet_architecture.png)
 
 ### License
 The code is licensed under BSD 3-Clause License that requires adding the developer's permission before mentioning their name for any work built on top of the software. More restrictive than MIT, less so than GPL.
