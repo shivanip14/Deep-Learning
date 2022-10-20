@@ -19,7 +19,7 @@ from tensorflow.keras.models import model_from_json
 import json
 import glob
 import sys
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, cohen_kappa_score
 from tensorflow.keras.layers import Activation
 
 def gelu(x):
@@ -75,6 +75,7 @@ test_labels = np.argmax(mame_test_labels, axis = 1)
 with open(base_path + 'savedmodels/reports/' + model_to_test + '_report.txt', 'w') as report_file:
     report_file.write('\nTest loss = ' + str(preds_test[0]))
     report_file.write('\nTest accuracy = ' + str(preds_test[1]))
+    report_file.write('\nCohen-Kappa score = ' + str(cohen_kappa_score(test_labels, pred_labels_bool)))
     report_file.write('\n')
     report_file.write(classification_report(test_labels, pred_labels_bool, target_names=mame_dataset['Medium'].unique()))
 

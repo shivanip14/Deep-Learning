@@ -35,10 +35,20 @@ Any deployed use case of the model - whether commercial or not - is currently ou
 
 
 ## Metrics
-The metrics used to evaluate the models built as part of the lab task are: accuracy & loss (model-wide), precision, recall & F1 score (across each category, per model).
+The metrics used to evaluate the models built as part of the lab task are: accuracy, loss & Kappa score (model-wide), precision, recall & F1 score (across each category, per model).
 
 - Good models are selected first on highest validation accuracy, and are chosen for further builds iteratively.
 - Accuracy graphs, loss graphs and confusion matrices are also generated and saved at `./lab1data/savedmodels/accuracy/`, `./lab1data/savedmodels/loss/` and `./lab1data/savedmodels/conf/` respectively.
+- The Cohen-Kappa score is used for evaluatin of classification models to compare the agreement of two or more raters - in this case, between our model and the actual test labels; however it can also be used to calculate between each pair of models to evaluate which is better.
+        
+        Kappa score       Agreement
+        <0                Less than just a chance agreement (disagreement, even)
+        0.01-0.20   	    Slight agreement
+        0.21-0.40   	    Fair agreement
+        0.41-0.60   	    Moderate agreement
+        0.61-0.80   	    Substancial agreement
+        0.81-0.99   	    Almost perfect agreement
+        
 - After a model is built & trained, it is evaluated using the `calculate_scores.py` which loads the model from a previously-saved JSON & weights, calculates the latter of the metrics specified above & generates a report for the model/experiment specified. (submitting a slurm job by passing experiment number as argument: e.g. `sbatch calculate_scores_launcher.sh exp_14`)
 
 ## Data
@@ -56,6 +66,8 @@ The model performance is as summarised below:
 `Test accuracy = 0.7562751770019531`
 
 `Test loss = 1.0035877227783203`
+
+`Cohen-Kappa score = 0.7465339955958673`
 
                                precision    recall  f1-score    support
              Oil on canvas       0.96       0.95      0.95       700
@@ -101,6 +113,7 @@ On the other hand, there are some which are performing exceptionally well, namel
 - The data is about museum art and artifcats and does not contain any sensitive or PII (personally identifyable information).
 
 ## Caveats and recommendations
+- Models with similar accuracy/val accuracy can be compared to each other with the Kappa score to see which ones are actually better - in-essence a Cohen-Kappa matrix for each of these similar models.
 - The impact of data augmentation have not been able to be fully explored, mainly due to very long training times, especially as the original dataset is big enough. Nevertheless, this should be one sub-domain to look into while trying to better the model.
 - Further design changes and tweaks are required for the subsequent versions of the model to reach the threshold of 80% test accuracy, after which work on the variable-sized images can be started. There is an evident scarcity of solutions to make use of the variable shaped-input in a single model and still provide real-life deployment-level performance, and much of the experimentation lies there.
 
