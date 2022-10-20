@@ -17,7 +17,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pickle
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import LeakyReLU, Input, Dropout, Dense, Conv2D, MaxPool2D, Flatten, GlobalAveragePooling2D, BatchNormalization
+from tensorflow.keras.layers import Activation, LeakyReLU, Input, Dropout, Dense, Conv2D, MaxPool2D, Flatten, GlobalAveragePooling2D, BatchNormalization
 from sklearn.metrics import confusion_matrix
 import seaborn as sn
 
@@ -77,18 +77,24 @@ print('Test labels shape: ' + str(mame_test_labels.shape))
 
 ############## Define CNN arch #######################
 input = Input(shape=(256, 256, 3))
-model = Conv2D(32, (3, 3), activation=LeakyReLU(), input_shape=(256, 256, 3), padding="same") (input)
-model = Conv2D(32, (3, 3), activation=LeakyReLU(), padding="same") (model)
+model = Conv2D(32, (3, 3), input_shape=(256, 256, 3), padding="same") (input)
+model = Activation(LeakyReLU()) (model)
+model = Conv2D(32, (3, 3), padding="same") (model)
+model = Activation(LeakyReLU()) (model)
 model = BatchNormalization() (model)
 model = MaxPool2D(pool_size=(2, 2), strides=(2, 2)) (model)
 
-model = Conv2D(64, (3, 3), activation=LeakyReLU(), padding="same") (model)
-model = Conv2D(64, (3, 3), activation=LeakyReLU(), padding="same") (model)
+model = Conv2D(64, (3, 3), padding="same") (model)
+model = Activation(LeakyReLU()) (model)
+model = Conv2D(64, (3, 3), padding="same") (model)
+model = Activation(LeakyReLU()) (model)
 model = BatchNormalization() (model)
 model = MaxPool2D(pool_size=(2, 2), strides=(2, 2)) (model)
 
-model = Conv2D(128, (3, 3), activation=LeakyReLU(), padding="same") (model)
-model = Conv2D(128, (3, 3), activation=LeakyReLU(), padding="same") (model)
+model = Conv2D(128, (3, 3), padding="same") (model)
+model = Activation(LeakyReLU()) (model)
+model = Conv2D(128, (3, 3), padding="same") (model)
+model = Activation(LeakyReLU()) (model)
 model = BatchNormalization() (model)
 model = MaxPool2D(pool_size=(2, 2), strides=(2, 2)) (model)
 
