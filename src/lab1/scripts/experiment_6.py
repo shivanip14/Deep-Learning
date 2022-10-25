@@ -18,8 +18,6 @@ import matplotlib.pyplot as plt
 import pickle
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Input, concatenate, Dense, Conv2D, MaxPool2D, Flatten, GlobalAveragePooling2D, BatchNormalization
-from sklearn.metrics import confusion_matrix
-import seaborn as sn
 
 
 base_path = './lab1data/'
@@ -138,17 +136,3 @@ plt.ylabel('loss')
 plt.xlabel('epoch')
 plt.legend(['train','val'], loc='upper left')
 plt.savefig(base_path + 'savedmodels/loss/exp_6_loss.pdf')
-
-# plotting & saving the confusion matrix as a heatmap
-
-predictions = np.argmax(preds_labels, axis = 1)
-labels = np.argmax(mame_test_labels, axis = 1)
-
-conf = confusion_matrix(labels, predictions)
-classes = np.arange(0, 29)
-
-conf_df = pd.DataFrame(conf, index = classes, columns = classes)
-plt.figure(figsize = (10, 8))
-plt.axis('off')
-conf_fig = sn.heatmap(conf_df, annot=True)
-conf_fig.get_figure().savefig(base_path + 'savedmodels/conf/exp_6_confusion_matrix.pdf', dpi=400)

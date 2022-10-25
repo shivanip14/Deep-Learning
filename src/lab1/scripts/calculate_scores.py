@@ -19,7 +19,9 @@ from tensorflow.keras.models import model_from_json
 import json
 import glob
 import sys
-from sklearn.metrics import classification_report, cohen_kappa_score
+from sklearn.metrics import classification_report, cohen_kappa_score, confusion_matrix
+import seaborn as sn
+import matplotlib.pyplot as plt
 from tensorflow.keras.layers import Activation
 
 def gelu(x):
@@ -72,10 +74,18 @@ pred_labels = loaded_model.predict(mame_test_imgs, verbose=1)
 pred_labels_bool = np.argmax(pred_labels, axis=1)
 test_labels = np.argmax(mame_test_labels, axis = 1)
 
+conf = confusion_matrix(test_labels, pred_labels_bool)
+classes = mame_dataset['Medium'].unique()
+
+conf_df = pd.DataFrame(conf, index=classes, columns=classes)
+plt.figure(figsize = (10, 10))
+conf_fig = sn.heatmap(conf_df, annot=False, square=True, xticklabels=classes, yticklabels=classes)
+conf_fig.get_figure().savefig(base_path + 'savedmodels/conf/' + model_to_test + '_confusion_matrix.png')
+
 with open(base_path + 'savedmodels/reports/' + model_to_test + '_report.txt', 'w') as report_file:
     report_file.write('\nTest loss = ' + str(preds_test[0]))
     report_file.write('\nTest accuracy = ' + str(preds_test[1]))
     report_file.write('\nCohen-Kappa score = ' + str(cohen_kappa_score(test_labels, pred_labels_bool)))
     report_file.write('\n')
-    report_file.write(classification_report(test_labels, pred_labels_bool, target_names=mame_dataset['Medium'].unique()))
+    report_file.write(classification_report(test_labels, pred_labels_bool, target_names=classes))
 
