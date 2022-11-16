@@ -31,7 +31,7 @@ def fine_tune_model(exp_no, loaded_model, train_generator, val_generator):
     # final_model.compile(optimizer=optimizers.SGD(lr=0.0001, momentum=0.9), loss='categorical_crossentropy', metrics=['accuracy'])
 
     # run training on tweaked model
-    early = EarlyStopping(monitor='val_accuracy', min_delta=0, patience=10, verbose=1, mode='auto')
+    early = EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=10, verbose=1, mode='auto')
     history = final_model.fit(train_generator, steps_per_epoch=(train_generator.n / batch_size), epochs=epochs, validation_data=val_generator, validation_steps=(val_generator.n / batch_size), callbacks=[early])
 
     # accuracy plot
