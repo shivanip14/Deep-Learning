@@ -1,12 +1,22 @@
-from keras.preprocessing.image import ImageDataGenerator
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 import pandas as pd
 import pickle
-from tensorflow.keras.models import model_from_json
 import json
 import glob
 import numpy as np
-from .fine_tune import fine_tune_model
+import matplotlib.pyplot as plt
+import sys
+from keras.callbacks import EarlyStopping
+from tensorflow.keras.models import model_from_json
+from keras.preprocessing.image import ImageDataGenerator
+
+exp_no = sys.argv[1]
+
+try:
+    _impobject = __import__('fine_tune_' + str(exp_no), globals(), locals(), ['fine_tune_model'], 0)
+    fine_tune_model = _impobject.fine_tune_model
+except ImportError:
+    print("fine_tune_" + str(exp_no) + ".py not found")
 
 img_width, img_height = 256, 256
 batch_size = 128
@@ -89,7 +99,35 @@ weights_path = base_path + 'savedmodels/weights/weights-MAMe-base-model.hdf5'
 for filename in glob.glob(weights_path):
     loaded_model.load_weights(filename)
 
-##### run experiments
-fine_tune_model('1', loaded_model, train_generator, val_generator)
-##### end experiments run
+final_model = fine_tune_model(loaded_model)
 
+# run training on tweaked model
+early = EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=10, verbose=1, mode='auto')
+history = final_model.fit(train_generator, steps_per_epoch=(train_generator.n / batch_size), epochs=epochs, validation_data=val_generator, validation_steps=(val_generator.n / batch_size), callbacks=[early])
+
+# accuracy plot
+plt.plot(history.history['accuracy'])
+plt.plot(history.history['val_accuracy'])
+plt.title('model accuracy')
+plt.ylabel('accuracy')
+plt.xlabel('epoch')
+plt.legend(['train','val'], loc='upper left')
+plt.title('Training and validation accuracy')
+plt.savefig(base_path + 'savedmodels/accuracy/ft_' + exp_no + '.pdf')
+plt.close()
+
+# loss plot
+plt.plot(history.history['loss'])
+plt.plot(history.history['val_loss'])
+plt.title('model loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(['train','val'], loc='upper left')
+plt.title('Training and validation loss')
+plt.savefig(base_path + 'savedmodels/loss/ft_' + exp_no + '.pdf')
+
+# saving fine-tuned model and weights
+with open(base_path + 'savedmodels/json/' + exp_no + '.json', 'w') as json_file:
+        json_file.write(final_model.to_json())
+weights_file = base_path + 'savedmodels/weights/weights-MAMe-ft_' + exp_no + '.hdf5'
+final_model.save_weights(weights_file, overwrite=True)
