@@ -13,6 +13,11 @@ from sklearn.metrics import classification_report, cohen_kappa_score, confusion_
 import seaborn as sn
 
 exp_no = sys.argv[1]
+base_model_exp = None
+delay_loading_weights = False
+if len(sys.argv) > 2:
+    base_model_exp = sys.argv[2]
+    delay_loading_weights = True
 
 try:
     _impobject = __import__('fine_tune_' + str(exp_no), globals(), locals(), ['fine_tune_model'], 0)
@@ -20,7 +25,6 @@ try:
 except ImportError:
     print("fine_tune_" + str(exp_no) + ".py not found")
 
-img_width, img_height = 256, 256
 batch_size = 128
 epochs = 100
 base_path = './lab2data/'
@@ -92,19 +96,27 @@ val_generator = val_datagen.flow(
     shuffle=False)
 
 # loading best CNN arch from Lab1 - exp_13 renamed and copied as base_model
-with open(base_path + 'savedmodels/json/base_model.json') as f:
+model_path = base_path + 'savedmodels/json/base_model.json'
+# if provided other experiment from where to load arch/model, load from there
+if delay_loading_weights:
+    print('Loading base model from experiment ' + str(base_model_exp))
+    model_path = base_path + 'savedmodels/json/' + base_model_exp + '.json'
+with open(model_path) as f:
     model_as_json = json.load(f)
 
 loaded_model = model_from_json(json.dumps(model_as_json))
 
 weights_path = base_path + 'savedmodels/weights/weights-MAMe-base-model.hdf5'
-for filename in glob.glob(weights_path):
-    loaded_model.load_weights(filename)
+if delay_loading_weights:
+    print('Weights to be initialised/loaded later from experiment ' + str(base_model_exp))
+else:
+    for filename in glob.glob(weights_path):
+        loaded_model.load_weights(filename)
 
 print('Pre-trained model:\n')
 loaded_model.summary()
 
-final_model = fine_tune_model(loaded_model)
+final_model = fine_tune_model(loaded_model, delay_loading_weights, base_model_exp)
 
 print('Fine-tuned model:\n')
 final_model.summary()

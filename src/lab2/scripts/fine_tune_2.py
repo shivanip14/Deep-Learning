@@ -2,7 +2,7 @@ from keras import optimizers
 from keras.models import Model
 from keras.layers import Dropout, Flatten, Dense
 
-def fine_tune_model(loaded_model):
+def fine_tune_model(loaded_model, delay_loading_weights=False, base_model_exp=None):
     ##### tweak loaded_model to make a final_model
     # freezing layers which will not be trained
     for layer in loaded_model.layers:

@@ -10,9 +10,9 @@ def fine_tune_model(loaded_model, delay_loading_weights=False, base_model_exp=No
 
     # adding custom layers
     x = loaded_model.output
-    x = Dense(512, activation='relu', name='added_dense_1')(x)
-    x = Dense(512, activation='relu', name='added_dense_2')(x)
-    op = Dense(29, activation='softmax', name='added_dense_3')(x)
+    x = Dense(1024, activation='relu', name='added_dense_1')(x)
+    x = Dropout(0.2, name='added_dropout_2')(x)
+    op = Dense(29, activation='softmax', name='added_dense_2')(x)
 
     # creating the final model
     final_model = Model(loaded_model.input, op)
