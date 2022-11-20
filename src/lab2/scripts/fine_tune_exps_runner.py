@@ -9,6 +9,8 @@ import sys
 from keras.callbacks import EarlyStopping
 from tensorflow.keras.models import model_from_json
 from keras.preprocessing.image import ImageDataGenerator
+from sklearn.metrics import classification_report, cohen_kappa_score, confusion_matrix
+import seaborn as sn
 
 exp_no = sys.argv[1]
 
@@ -26,7 +28,7 @@ base_img_path = base_path + 'data_256/'
 
 mame_dataset = pd.read_csv(base_path + 'MAMe_dataset.csv')
 
-# read image lab1data from previously saved pkls
+# read images from previously saved pkls
 with open(base_path + 'pkls/train_imgs.pkl', 'rb') as f:
     mame_train_imgs = pickle.load(f)
 with open(base_path + 'pkls/val_imgs.pkl', 'rb') as f:
@@ -36,7 +38,7 @@ with open(base_path + 'pkls/test_imgs.pkl', 'rb') as f:
 
 mame_train_imgs = np.array(mame_train_imgs, dtype=np.float32)
 mame_val_imgs = np.array(mame_val_imgs, dtype=np.float32)
-mame_test_imgs = np.array(mame_test_imgs, dtype=np.float32)
+mame_test_imgs = np.array(mame_test_imgs, dtype=np.float32) / 255
 
 # Preparing the labels as OHE
 le = LabelEncoder()
@@ -99,7 +101,13 @@ weights_path = base_path + 'savedmodels/weights/weights-MAMe-base-model.hdf5'
 for filename in glob.glob(weights_path):
     loaded_model.load_weights(filename)
 
+print('Pre-trained model:\n')
+loaded_model.summary()
+
 final_model = fine_tune_model(loaded_model)
+
+print('Fine-tuned model:\n')
+final_model.summary()
 
 # run training on tweaked model
 early = EarlyStopping(monitor='val_accuracy', min_delta=0.0001, patience=10, verbose=1, mode='auto')
@@ -126,8 +134,29 @@ plt.legend(['train','val'], loc='upper left')
 plt.title('Training and validation loss')
 plt.savefig(base_path + 'savedmodels/loss/ft_' + exp_no + '.pdf')
 
+# evaluate & save performance
+preds_test = final_model.evaluate(mame_test_imgs, mame_test_labels)
+pred_labels = final_model.predict(mame_test_imgs, verbose=1)
+pred_labels_bool = np.argmax(pred_labels, axis=1)
+test_labels = np.argmax(mame_test_labels, axis=1)
+
+conf = confusion_matrix(test_labels, pred_labels_bool)
+classes = mame_dataset['Medium'].unique()
+
+conf_df = pd.DataFrame(conf, index=classes, columns=classes)
+plt.figure(figsize=(10, 10))
+conf_fig = sn.heatmap(conf_df, annot=False, square=True, xticklabels=classes, yticklabels=classes)
+conf_fig.get_figure().savefig(base_path + 'savedmodels/conf/' + exp_no + '_confusion_matrix.png')
+
+with open(base_path + 'savedmodels/reports/' + exp_no + '_report.txt', 'w') as report_file:
+    report_file.write('\nTest loss = ' + str(preds_test[0]))
+    report_file.write('\nTest accuracy = ' + str(preds_test[1]))
+    report_file.write('\nCohen-Kappa score = ' + str(cohen_kappa_score(test_labels, pred_labels_bool)))
+    report_file.write('\n')
+    report_file.write(classification_report(test_labels, pred_labels_bool, target_names=classes))
+
 # saving fine-tuned model and weights
 with open(base_path + 'savedmodels/json/' + exp_no + '.json', 'w') as json_file:
         json_file.write(final_model.to_json())
-weights_file = base_path + 'savedmodels/weights/weights-MAMe-ft_' + exp_no + '.hdf5'
+weights_file = base_path + 'savedmodels/weights/weights-MAMe-ft_' + exp_no + '_' + str(preds_test[1]) + '.hdf5'
 final_model.save_weights(weights_file, overwrite=True)
