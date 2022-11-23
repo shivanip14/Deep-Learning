@@ -1,16 +1,14 @@
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 import pandas as pd
 import pickle
-import json
-import glob
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 from keras.callbacks import EarlyStopping
-from tensorflow.keras.models import model_from_json
 from keras.preprocessing.image import ImageDataGenerator
 from sklearn.metrics import classification_report, cohen_kappa_score, confusion_matrix
 import seaborn as sn
+from tensorflow.keras.applications import InceptionV3
 
 exp_no = sys.argv[1]
 base_model_exp = None
@@ -67,23 +65,9 @@ print('Train labels shape: ' + str(mame_train_labels.shape))
 print('Val labels shape: ' + str(mame_val_labels.shape))
 print('Test labels shape: ' + str(mame_test_labels.shape))
 
-# Initiate the train and test generators with data Augumentation
-train_datagen = ImageDataGenerator(
-    rescale=1. / 255,
-    horizontal_flip=True,
-    width_shift_range=0.2,
-    height_shift_range=0.2)
-# fill_mode="nearest",
-# zoom_range=0.3,
-# rotation_range=30)
-val_datagen = ImageDataGenerator(
-    rescale=1. / 255,
-    horizontal_flip=True,
-    width_shift_range=0.2,
-    height_shift_range=0.2)
-# fill_mode="nearest",
-# zoom_range=0.3,
-# rotation_range=30)
+# Initiate the train and test generators with data Augmentation
+train_datagen = ImageDataGenerator(rescale=1. / 255)
+val_datagen = ImageDataGenerator(rescale=1. / 255)
 train_generator = train_datagen.flow(
     mame_train_imgs,
     mame_train_labels,
@@ -95,30 +79,15 @@ val_generator = val_datagen.flow(
     batch_size=batch_size,
     shuffle=False)
 
-# loading best CNN arch from Lab1 - exp_13 renamed and copied as base_model
-model_path = base_path + 'savedmodels/json/base_model.json'
-# if provided other experiment from where to load arch/model, load from there
-if delay_loading_weights:
-    print('Loading base model from experiment ' + str(base_model_exp))
-    model_path = base_path + 'savedmodels/json/' + base_model_exp + '.json'
-with open(model_path) as f:
-    model_as_json = json.load(f)
+# loading InceptionV3 model from keras
+loaded_model = InceptionV3(include_top=False, weights=base_path + '/savedmodels/weights/inceptionv3-base-no-top.h5', input_shape=(256, 256, 3))
 
-loaded_model = model_from_json(json.dumps(model_as_json))
-
-weights_path = base_path + 'savedmodels/weights/weights-MAMe-base-model.hdf5'
-if delay_loading_weights:
-    print('Weights to be initialised/loaded later from experiment ' + str(base_model_exp))
-else:
-    for filename in glob.glob(weights_path):
-        loaded_model.load_weights(filename)
-
-print('Pre-trained model:\n')
+print('Pre-trained InceptionV3 model:\n')
 loaded_model.summary()
 
 final_model = fine_tune_model(loaded_model, delay_loading_weights, base_model_exp)
 
-print('Fine-tuned model:\n')
+print('Fine-tuned InceptionV3 model:\n')
 final_model.summary()
 
 # run training on tweaked model
