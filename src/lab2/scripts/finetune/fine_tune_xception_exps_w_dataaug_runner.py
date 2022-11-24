@@ -66,8 +66,22 @@ print('Val labels shape: ' + str(mame_val_labels.shape))
 print('Test labels shape: ' + str(mame_test_labels.shape))
 
 # Initiate the train and test generators with data Augmentation
-train_datagen = ImageDataGenerator(rescale=1. / 255)
-val_datagen = ImageDataGenerator(rescale=1. / 255)
+train_datagen = ImageDataGenerator(
+    rescale=1. / 255,
+    horizontal_flip=True,
+    width_shift_range=0.2,
+    height_shift_range=0.2)
+# fill_mode="nearest",
+# zoom_range=0.3,
+# rotation_range=30)
+val_datagen = ImageDataGenerator(
+    rescale=1. / 255,
+    horizontal_flip=True,
+    width_shift_range=0.2,
+    height_shift_range=0.2)
+# fill_mode="nearest",
+# zoom_range=0.3,
+# rotation_range=30)
 train_generator = train_datagen.flow(
     mame_train_imgs,
     mame_train_labels,
@@ -80,10 +94,7 @@ val_generator = val_datagen.flow(
     shuffle=False)
 
 # loading Xception model from keras
-weights_path = base_path + '/savedmodels/weights/xception-base-no-top.h5'
-if delay_loading_weights:
-    weights_path = None
-loaded_model = Xception(include_top=False, weights=weights_path, input_shape=(256, 256, 3))
+loaded_model = Xception(include_top=False, weights=base_path + '/savedmodels/weights/xception-base-no-top.h5', input_shape=(256, 256, 3))
 
 print('Pre-trained Xception model:\n')
 loaded_model.summary()

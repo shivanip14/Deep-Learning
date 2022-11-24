@@ -80,17 +80,17 @@ val_generator = val_datagen.flow(
     shuffle=False)
 
 # loading Xception model from keras
-weights_path = base_path + '/savedmodels/weights/xception-base-no-top.h5'
+weights_path = base_path + '/savedmodels/weights/xception-base-w-top.h5'
 if delay_loading_weights:
     weights_path = None
-loaded_model = Xception(include_top=False, weights=weights_path, input_shape=(256, 256, 3))
+loaded_model = Xception(include_top=True, weights=weights_path, input_shape=(256, 256, 3))
 
-print('Pre-trained Xception model:\n')
+print('Pre-trained Xception model with top:\n')
 loaded_model.summary()
 
 final_model = fine_tune_model(loaded_model, delay_loading_weights, base_model_exp)
 
-print('Fine-tuned Xception model:\n')
+print('Fine-tuned Xception model with top:\n')
 final_model.summary()
 
 # run training on tweaked model
