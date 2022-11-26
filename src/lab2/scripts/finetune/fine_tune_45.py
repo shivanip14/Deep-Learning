@@ -6,7 +6,7 @@ import glob
 base_path = './lab2data/'
 
 def fine_tune_model(loaded_model, delay_loading_weights=False, base_model_exp=None):
-    unfreeze_last_n_layers = 1
+    unfreeze_last_n_layers = 3
     for layer in loaded_model.layers[::-1]:
         if unfreeze_last_n_layers > 0:
             if len(layer.trainable_weights) > 0:
