@@ -7,14 +7,8 @@ from keras.losses import CategoricalCrossentropy
 base_path = './lab2data/'
 
 def fine_tune_model(loaded_model, delay_loading_weights=False, base_model_exp=None):
-    unfreeze_last_n_layers = 4
-    for layer in loaded_model.layers[::-1]:
-        if unfreeze_last_n_layers > 0:
-            if len(layer.trainable_weights) > 0:
-                layer.trainable = True
-                unfreeze_last_n_layers -= 1
-        else:
-            layer.trainable = False
+    for layer in loaded_model.layers:
+        layer.trainable = False
 
     # adding custom layers
     x = loaded_model.output
@@ -30,5 +24,5 @@ def fine_tune_model(loaded_model, delay_loading_weights=False, base_model_exp=No
         for filename in glob.glob(weights_path):
             final_model.load_weights(filename)
 
-    final_model.compile(optimizer=optimizers.SGD(learning_rate=0.001, momentum=0.9), loss=CategoricalCrossentropy(), metrics=['accuracy'])
+    final_model.compile(optimizer=optimizers.SGD(learning_rate=0.0001, momentum=0.9), loss=CategoricalCrossentropy(), metrics=['accuracy'])
     return final_model

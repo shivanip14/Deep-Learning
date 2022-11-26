@@ -30,5 +30,5 @@ def fine_tune_model(loaded_model, delay_loading_weights=False, base_model_exp=No
         for filename in glob.glob(weights_path):
             final_model.load_weights(filename)
 
-    final_model.compile(optimizer=optimizers.SGD(learning_rate=0.001, momentum=0.9), loss=CategoricalCrossentropy(label_smoothing=0.05), metrics=['accuracy'])
+    final_model.compile(optimizer=optimizers.SGD(learning_rate=0.001, momentum=0.9), loss=CategoricalCrossentropy(), metrics=['accuracy'])
     return final_model
