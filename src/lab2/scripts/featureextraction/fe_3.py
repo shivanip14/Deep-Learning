@@ -1,0 +1,1 @@
+target_layer_names = ['block1_conv1', 'block1_conv2', 'block2_sepconv1', 'block2_sepconv2', 'conv2d', 'block3_sepconv1', 'block3_sepconv2', 'conv2d_1']
