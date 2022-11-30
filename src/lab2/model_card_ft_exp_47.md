@@ -111,7 +111,7 @@ The model performance is as summarised below. It was able to beat the _patnet_ m
 
 As is evident, the scores across some of the categories is a little subpar as compared to the average performance of the model as a whole, especially `Porcelain`.
 
-Categories like `Steel` were performing quite bad on with a model developed from scratch (i.e. _patnet_ from Lab 1), however with a fine-tuned model such as the current one, we see slight improvement (from 0.51 to 0.56).
+Categories like `Steel` were performing quite bad on a model developed from scratch (i.e. _patnet_ from Lab 1), however with a fine-tuned model such as the current one, we see slight improvement (from 0.51 to 0.56).
 
 On the other hand, there are some which are performing exceptionally well, namely `Oil on canvas`, `Marble` & `Ivory`. 
 
