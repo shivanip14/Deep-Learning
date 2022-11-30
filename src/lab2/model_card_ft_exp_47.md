@@ -125,7 +125,9 @@ Accuracy | Loss | Confusion Matrix
 - The model is trained on data that is publicly available, on commercial websites and/or as pre-packaged datasets used widely by the AI community. Most (if not all) art objects photographed are on public display at various museums across the US.
 - The data is about museum art and artifcats and does not contain any sensitive or PII (personally identifiable information).
 
-## Caveats and recommendations - TODO
+## Caveats and recommendations
 - Models with similar accuracy/val accuracy can be compared to each other with the Kappa score to see which ones are actually better - in-essence a Cohen-Kappa matrix for each of these similar models.
+- Particularly hard classes can be ignored from this model and instead a new model could be built specifically for those, to improve the overall performance.
+- Selective data augmentation for categories that performed the worst could be implemented as a blanket data augmentation is shown to instead result in degradation of performance.
 - Further design changes and tweaks are required for the subsequent versions of the model to reach the threshold of 80% test accuracy, after which work on the variable-sized images can be started. There is an evident scarcity of solutions to make use of the variable shaped-input in a single model and still provide real-life deployment-level performance, and much of the experimentation lies there.
 
