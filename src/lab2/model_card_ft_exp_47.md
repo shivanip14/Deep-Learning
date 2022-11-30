@@ -117,10 +117,9 @@ On the other hand, there are some which are performing exceptionally well, namel
 
 The resultant plots for the same are as below:
 
-Accuracy | Loss
-:--------:|:-------:
-![acc_exp47](./lab2data/savedmodels/accuracy/ft_47.png) | ![loss_exp47](./lab2data/savedmodels/loss/ft_47.png)
-![conf_exp47](./lab2data/savedmodels/conf/47_confusion_matrix.png)
+Accuracy | Loss | Confusion Matrix
+:--------:|:-------:|:--------:
+![acc_exp47](./lab2data/savedmodels/accuracy/ft_47.png) | ![loss_exp47](./lab2data/savedmodels/loss/ft_47.png) | ![conf_exp47](./lab2data/savedmodels/conf/47_confusion_matrix.png)
 
 ## Ethical considerations
 - The model is trained on data that is publicly available, on commercial websites and/or as pre-packaged datasets used widely by the AI community. Most (if not all) art objects photographed are on public display at various museums across the US.
