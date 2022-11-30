@@ -1,0 +1,39 @@
+
+Test loss = 9.975723266601562
+Test accuracy = 0.707798421382904
+Cohen-Kappa score = 0.6962152489516242
+                        precision    recall  f1-score   support
+
+         Oil on canvas       0.93      0.90      0.92       700
+              Graphite       0.63      0.59      0.61       700
+                 Glass       0.76      0.72      0.74       700
+             Limestone       0.73      0.79      0.75       313
+                Bronze       0.65      0.66      0.65       700
+               Ceramic       0.62      0.54      0.58       700
+      Polychromed wood       0.77      0.70      0.73       700
+               Faience       0.79      0.57      0.66       700
+                  Wood       0.81      0.77      0.79       700
+                  Gold       0.50      0.84      0.63       188
+                Marble       0.85      0.95      0.90       328
+                 Ivory       0.89      0.97      0.93       584
+                Silver       0.52      0.71      0.60       265
+               Etching       0.60      0.53      0.57       572
+                  Iron       0.72      0.63      0.67       700
+             Engraving       0.70      0.64      0.67       700
+                 Steel       0.43      0.72      0.54       257
+             Woodblock       0.75      0.70      0.73       700
+ Silk and metal thread       0.72      0.66      0.69       286
+            Lithograph       0.40      0.66      0.50       375
+         Woven fabric        0.82      0.81      0.82       700
+             Porcelain       0.28      0.59      0.38        95
+     Pen and brown ink       0.76      0.58      0.66       700
+               Woodcut       0.57      0.86      0.69       133
+        Wood engraving       0.62      0.62      0.62       700
+Hand-colored engraving       0.59      0.72      0.65       361
+                  Clay       0.87      0.84      0.85       700
+  Hand-colored etching       0.81      0.78      0.80       700
+    Albumen photograph       0.78      0.73      0.76       700
+
+              accuracy                           0.71     15657
+             macro avg       0.69      0.72      0.69     15657
+          weighted avg       0.72      0.71      0.71     15657
