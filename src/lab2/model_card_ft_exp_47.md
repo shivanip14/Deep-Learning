@@ -63,7 +63,9 @@ While the original, high res variable sized images are not used in this model si
 
 Subsets for train (20,300 instances), validate (1,450 instances) and test (15,657 instances) have been provided in the metadata `MAMe_dataset.csv`, and have a fair disribution across all the categories:
 
-![data_distribution](../lab1/lab1data/dataex/data_dist.png)
+<p align="center">
+        <img src="../lab1/lab1data/dataex/data_dist.png" width="500"/>
+</p>
 
 ## Quantitative analysis
 The model performance is as summarised below. It was able to beat the _patnet_ model from Lab 1 which was built and trained from scratch, in case of validation accuracy by a slight margin (0.7407 in patnet vs. 0.7476 in fine-tuned), however the performance on the test set was slightly worse (test accuracy 0.7563 in patnet vs. 0.7488 in fine-tuned, Kappa score 0.7465 in patnet vs. 0.7387 in fine-tuned).
