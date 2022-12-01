@@ -1,13 +1,9 @@
 import pandas as pd
 import pickle
-import json
 import numpy as np
 import sys
 from fne import full_network_embedding
 from keras import optimizers
-from keras.models import Model
-import glob
-from tensorflow.keras.models import model_from_json
 from tensorflow.keras.applications import VGG16, Xception, DenseNet121, InceptionV3
 from sklearn.metrics import classification_report, cohen_kappa_score, confusion_matrix, accuracy_score
 import matplotlib.pyplot as plt
@@ -104,6 +100,8 @@ classes = mame_dataset['Medium'].unique()
 
 for itr, classifier in enumerate(classifiers):
     clf = train[itr](fne_features, mame_train_labels)
+    with open(base_path + 'savedmodels/fe/classifiers/' + exp_no + '_' + classifier + '.pkl', 'wb') as fid:
+        pickle.dump(clf, fid)
     predicted_val_labels = classify(clf, fne_val_features, classifier, 'validation')
     print('Validation accuracy for [' + classifier + ']: ' + str(accuracy_score(mame_val_labels, predicted_val_labels)))
     predicted_test_labels = classify(clf, fne_test_features, classifier, 'test')

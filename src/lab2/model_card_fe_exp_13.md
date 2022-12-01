@@ -9,13 +9,15 @@ November 2022
 ### Model version
 v1
 
-### Model type - TODO
+### Model type
 Originally proposed by [François Chollet in 2016](https://arxiv.org/abs/1610.02357), Xception (or an eXtreme version of Inception) features modified depth-wise separable convolutions, where a pointwise convolution is followed by a depthwise convolution (instead of the other way around in case of Inception network).
 The Xception architecture has the same number of parameters as InceptionV3, hence the performance gains are not due to increased capacity but rather to a more efficient use of model parameters.
 In the end it is compiled with SGD optimiser with LR=0.001 and categorical cross-entropy for measuring loss.
 
-We used a total of 42 layers (all 40 conv layers from the Xception layer + 2 FC layers in the end) for the feature extraction from the training data. These were then fed to a Linear SVC for training with default out-of-the-box parameters (L2 penalty, squared hinge loss, tolerance of 0.0001, C=1.0 and no class weighing).
 ![arch](MAMe-FA-SVMX_arch.png)
+
+We used a total of 42 layers (all 40 conv layers from the Xception layer + 2 FC layers in the end) for the feature extraction from the training data. These were then fed to a Linear SVC for training with default out-of-the-box parameters (L2 penalty, squared hinge loss, tolerance of 0.0001, C=1.0 and no class weighing).
+
 
 ### License
 The code is licensed under BSD 3-Clause License that requires adding the developer's permission before mentioning their name for any work built on top of the software. More restrictive than MIT, less so than GPL.
@@ -51,7 +53,7 @@ The metrics used to evaluate the models built as part of the lab task are: accur
         0.21-0.40   	    Fair agreement
         0.41-0.60   	    Moderate agreement
         0.61-0.80   	    Substantial agreement
-        0.81-0.99   	    Almost perfect agreement
+        0.81-0.99   	    Almost perfect agreement   <-- this model falls here
         
 
 ## Data

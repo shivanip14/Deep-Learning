@@ -51,7 +51,7 @@ The metrics used to evaluate the models built as part of the lab task are: accur
         0.01-0.20   	    Slight agreement
         0.21-0.40   	    Fair agreement
         0.41-0.60   	    Moderate agreement
-        0.61-0.80   	    Substantial agreement
+        0.61-0.80   	    Substantial agreement       <-- this model falls here
         0.81-0.99   	    Almost perfect agreement
         
 - After a model is built & trained, it is evaluated using the `calculate_scores.py` which loads the model from a previously-saved JSON & weights, calculates the latter of the metrics specified above & generates a report for the model/experiment specified. (submitting a slurm job by passing experiment number as argument: e.g. `sbatch calculate_scores_launcher.sh exp_14`)
