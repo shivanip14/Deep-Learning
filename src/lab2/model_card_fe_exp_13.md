@@ -109,6 +109,15 @@ The model performance is as summarised below. It was able to easily beat the _pa
 As is evident, the scores across some of the categories is a little subpar as compared to the average performance of the model as a whole, especially `Silk and metal thread`.
 
 Particularly hard categories like `Steel`, `Porcelain` & `Lithograph` were performing quite bad on traditional CNN models (either ones developed from scratch like _patnet_ from Lab 1 or fine-tuned), surprisingly surpassed expectatons with feature extraction on an imagenet-pre-trained model such as the current one, with a huge improvement in results (F1 scores improved from 0.51 to 0.85, from 0.43 to 0.91, from 0.56 to 0.84 respectively). 
+The resultant confusion matrix and val & test accuracies for the same is as below, also compared with that of the other classifiers trained on the _**same set of extracted features**_:
+
+Classifier | Confusion Matrix | Validation Accuracy | Test Accuracy
+:--------:|:-------:|:-------:|:-------:
+SVM | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_svm_confusion_matrix.png) | 0.8455 | 0.8500
+Random Forest | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_randomforest_confusion_matrix.png) | 0.7662 | 0.7487
+Decision Trees | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_decisiontree_confusion_matrix.png) | 0.5352 | 0.5068
+Gaussian Naive-Bayes | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_gaussiannb_confusion_matrix.png) | 0.4283 | 0.4127
+AdaBoost | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_adaboost_confusion_matrix.png) | 0.3448 | 0.3134
 
 ## Ethical considerations
 - The model is trained on data that is publicly available, on commercial websites and/or as pre-packaged datasets used widely by the AI community. Most (if not all) art objects photographed are on public display at various museums across the US.
