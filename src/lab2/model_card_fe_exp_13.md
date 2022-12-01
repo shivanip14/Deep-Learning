@@ -67,14 +67,14 @@ Subsets for train (20,300 instances), validate (1,450 instances) and test (15,65
 </p>
 
 ## Quantitative analysis
-The model performance is as summarised below. It was able to easily beat the _patnet_ model from Lab 1 which was built and trained from scratch, in case of validation accuracy by more than 10% (0.7407 in patnet vs. 0.8455 in SVM/FE). The performance on the test set was also significantly better (test accuracy 0.7563 in patnet vs. 0.8500 in SVM/FE, Kappa score 0.7465 in patnet vs. 0.8440 in SVM/FE).
+The model performance is as summarised below. It was able to easily beat the _patnet_ model from Lab 1 which was built and trained from scratch, in case of validation accuracy by more than 10% (0.7407 in patnet vs. 0.8455 in SVM/FE). The performance on the test set was also significantly better (test accuracy 0.7563 in patnet vs. 0.8507 in SVM/FE, Kappa score 0.7465 in patnet vs. 0.8446 in SVM/FE).
 
-    Test accuracy = 0.8500351280577377
-    Cohen-Kappa score = 0.8439702424033271
+        Test accuracy = 0.850673820016606
+    Cohen-Kappa score = 0.844634100341896
                             precision    recall  f1-score   support
     
         Albumen photograph       0.98      0.98      0.98       700
-                    Bronze       0.81      0.81      0.81       700
+                    Bronze       0.81      0.82      0.81       700
                    Ceramic       0.85      0.83      0.84       700
                       Clay       0.89      0.92      0.90       313
                  Engraving       0.83      0.80      0.81       700
@@ -85,23 +85,23 @@ The model performance is as summarised below. It was able to easily beat the _pa
                   Graphite       0.81      0.95      0.87       188
     Hand-colored engraving       0.97      0.99      0.98       328
       Hand-colored etching       0.96      0.98      0.97       584
-                      Iron       0.74      0.85      0.79       265
+                      Iron       0.73      0.84      0.78       265
                      Ivory       0.79      0.79      0.79       572
                  Limestone       0.85      0.76      0.80       700
                 Lithograph       0.88      0.80      0.84       700
                     Marble       0.60      0.82      0.70       257
              Oil on canvas       0.84      0.82      0.83       700
-         Pen and brown ink       0.83      0.95      0.89       286
-          Polychromed wood       0.64      0.67      0.66       375
-                 Porcelain       0.89      0.94      0.91       700
+         Pen and brown ink       0.82      0.95      0.88       286
+          Polychromed wood       0.65      0.67      0.66       375
+                 Porcelain       0.89      0.94      0.92       700
      Silk and metal thread       0.32      0.77      0.46        95
                     Silver       0.91      0.82      0.86       700
-                     Steel       0.76      0.95      0.85       133
-                      Wood       0.82      0.76      0.79       700
+                     Steel       0.75      0.95      0.84       133
+                      Wood       0.83      0.77      0.80       700
             Wood engraving       0.77      0.89      0.82       361
                  Woodblock       0.95      0.97      0.96       700
                    Woodcut       0.91      0.90      0.91       700
-             Woven fabric        0.92      0.76      0.84       700
+             Woven fabric        0.92      0.77      0.84       700
     
                   accuracy                           0.85     15657
                  macro avg       0.83      0.86      0.84     15657
@@ -109,14 +109,14 @@ The model performance is as summarised below. It was able to easily beat the _pa
 
 As is evident, the scores across some of the categories is a little subpar as compared to the average performance of the model as a whole, especially `Silk and metal thread`.
 
-Particularly hard categories like `Steel`, `Porcelain` & `Lithograph` were performing quite bad on traditional CNN models (either ones developed from scratch like _patnet_ from Lab 1 or fine-tuned), surprisingly surpassed expectatons with feature extraction on an imagenet-pre-trained model such as the current one, with a huge improvement in results (F1 scores improved from 0.51 to 0.85, from 0.43 to 0.91, from 0.56 to 0.84 respectively). 
+Particularly hard categories like `Steel`, `Porcelain` & `Lithograph` were performing quite bad on traditional CNN models (either ones developed from scratch like _patnet_ from Lab 1 or fine-tuned), surprisingly surpassed expectatons with feature extraction on an imagenet-pre-trained model such as the current one, with a huge improvement in results (F1 scores improved from 0.51 to 0.84, from 0.43 to 0.92, from 0.56 to 0.84 respectively). 
 The resultant confusion matrix and val & test accuracies for the same is as below, also compared with that of the other classifiers trained on the _**same set of extracted features**_:
 
 Classifier | Confusion Matrix | Validation Accuracy | Test Accuracy
 :--------:|:-------:|:-------:|:-------:
-SVM | <img src="./lab2data/savedmodels/fe/conf/13_svm_confusion_matrix.png" width="350" /> | 0.8455 | 0.8500
-Random Forest | <img src="./lab2data/savedmodels/fe/conf/13_randomforest_confusion_matrix.png" width="350" /> | 0.7662 | 0.7487
-Decision Trees | <img src="./lab2data/savedmodels/fe/conf/13_decisiontree_confusion_matrix.png" width="350" /> | 0.5352 | 0.5068
+SVM | <img src="./lab2data/savedmodels/fe/conf/13_svm_confusion_matrix.png" width="350" /> | 0.8455 | 0.8507
+Random Forest | <img src="./lab2data/savedmodels/fe/conf/13_randomforest_confusion_matrix.png" width="350" /> | 0.7676 | 0.7484
+Decision Trees | <img src="./lab2data/savedmodels/fe/conf/13_decisiontree_confusion_matrix.png" width="350" /> | 0.5296 | 0.5085
 Gaussian Naive-Bayes | <img src="./lab2data/savedmodels/fe/conf/13_gaussiannb_confusion_matrix.png" width="350" /> | 0.4283 | 0.4127
 AdaBoost | <img src="./lab2data/savedmodels/fe/conf/13_adaboost_confusion_matrix.png" width="350" /> | 0.3448 | 0.3134
 
