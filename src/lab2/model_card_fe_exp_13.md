@@ -62,8 +62,9 @@ Images of thousands of artworks and artifacts from all the 3 museums (Metropolit
 While the original, high res variable sized images are not used in this model since it needs additional advanced experimentation to reach the required baseline performance of 80% test accuracy, the 256 version was the one on which the data was trained, validated and tested.
 
 Subsets for train (20,300 instances), validate (1,450 instances) and test (15,657 instances) have been provided in the metadata `MAMe_dataset.csv`, and have a fair disribution across all the categories:
-
-![data_distribution](../lab1/lab1data/dataex/data_dist.png)
+<p align="center">
+        <img src="../lab1/lab1data/dataex/data_dist.png" width="500"/>
+</p>
 
 ## Quantitative analysis
 The model performance is as summarised below. It was able to easily beat the _patnet_ model from Lab 1 which was built and trained from scratch, in case of validation accuracy by more than 10% (0.7407 in patnet vs. 0.8455 in SVM/FE). The performance on the test set was also significantly better (test accuracy 0.7563 in patnet vs. 0.8500 in SVM/FE, Kappa score 0.7465 in patnet vs. 0.8440 in SVM/FE).
@@ -113,11 +114,11 @@ The resultant confusion matrix and val & test accuracies for the same is as belo
 
 Classifier | Confusion Matrix | Validation Accuracy | Test Accuracy
 :--------:|:-------:|:-------:|:-------:
-SVM | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_svm_confusion_matrix.png) | 0.8455 | 0.8500
-Random Forest | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_randomforest_confusion_matrix.png) | 0.7662 | 0.7487
-Decision Trees | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_decisiontree_confusion_matrix.png) | 0.5352 | 0.5068
-Gaussian Naive-Bayes | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_gaussiannb_confusion_matrix.png) | 0.4283 | 0.4127
-AdaBoost | ![acc_exp47](./lab2data/savedmodels/fe/conf/13_adaboost_confusion_matrix.png) | 0.3448 | 0.3134
+SVM | <img src="./lab2data/savedmodels/fe/conf/13_svm_confusion_matrix.png" width="350" /> | 0.8455 | 0.8500
+Random Forest | <img src="./lab2data/savedmodels/fe/conf/13_randomforest_confusion_matrix.png" width="350" /> | 0.7662 | 0.7487
+Decision Trees | <img src="./lab2data/savedmodels/fe/conf/13_decisiontree_confusion_matrix.png" width="350" /> | 0.5352 | 0.5068
+Gaussian Naive-Bayes | <img src="./lab2data/savedmodels/fe/conf/13_gaussiannb_confusion_matrix.png" width="350" /> | 0.4283 | 0.4127
+AdaBoost | <img src="./lab2data/savedmodels/fe/conf/13_adaboost_confusion_matrix.png" width="350" /> | 0.3448 | 0.3134
 
 ## Ethical considerations
 - The model is trained on data that is publicly available, on commercial websites and/or as pre-packaged datasets used widely by the AI community. Most (if not all) art objects photographed are on public display at various museums across the US.
